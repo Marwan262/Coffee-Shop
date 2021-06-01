@@ -1,14 +1,29 @@
 <?php
 include "classes.php";
-$_SESSION['Cart'];
 $cart = $_POST['order'];
+
 function addToCart(){
-  $_SESSION['Cart'] .= $cart;
+  if (!isset($_SESSION['Cart'])) {
+    $_SESSION['Cart'] .= $cart;
+  }
+  else {
+    $_SESSION['Cart'] .= "," .= $cart;
+  }
+
+}
+function checkout(){
+  if (isset($_SESSION['Cart'])) {
+    header('Location: cart.php/?');
+  }
 }
 
 switch ($_POST['q']) {
   case 'add':
     addToCart();
+    break;
+
+  case 'cart':
+    checkout();
     break;
 }
 ?>

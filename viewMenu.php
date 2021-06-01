@@ -18,23 +18,28 @@ $result3 = mysqli_query($conn,$sql3);
      <title>Menu</title>
      <script type="text/javascript">
        function addAnotherDrink(){
-         var condiment = document.getElementById('condiment').value;
-         var drink = document.getElementById('drink').value;
-         var milk = document.getElementById('milk').value;
-         var formdata = new formData();
-         formdata.append('q', 'add');
-         formdata.append('order', 'awdwad');
+         var order = "";
+         var condiment = document.getElementById('condiment').value.toString();
+         var drink = document.getElementById('drink').value.toString();
+         var milk = document.getElementById('milk').value.toString();
+         order += drink += condiment += milk;
+         var formData = new FormData();
+         formData.append('q', 'add');
+         formData.append('order', order);
          var xmlhttp=new XMLHttpRequest();
-         // xmlhttp.onreadystatechange=function() {
-         //   if (this.readyState==4 && this.status==200) {
-         //     clear();
-         //   }
-         // }
+         xmlhttp.onreadystatechange=function() {
+           if (this.readyState==4 && this.status==200) {
+             clear();
+           }
+         }
          xmlhttp.open("POST","php/menu.php",true);
          xmlhttp.send(formData);
        }
        function clear(){
-
+         var array = document.getElementsByClassName("menu");
+         for (var i = 0; i < array.length; i++) {
+           array[i].checked = false;
+         }
        }
      </script>
    </head>
@@ -53,6 +58,7 @@ $result3 = mysqli_query($conn,$sql3);
                </tr>
              </thead>
              <tbody>
+
                <?php
                while ($row1 = mysqli_fetch_array($result1)) {
                  echo "<tr>";
@@ -60,7 +66,7 @@ $result3 = mysqli_query($conn,$sql3);
                  echo "<td>" . $row1['drinkName'] . "</td>";
                  echo "<td>" . $row1['Price'] . "</td>";
                  echo "<td>" . $row1['Description'] . "</td>";
-                 echo "<td><input type='radio' id = 'drink name='drink' value='" . $row1['drinkName'] . "'></td>";
+                 echo "<td><input type='radio' class = 'menu' id='drink' name='drink' value='" . $row1['drinkName'] . "'></td>";
                  echo "</tr>";
                }
                 ?>
@@ -83,7 +89,7 @@ $result3 = mysqli_query($conn,$sql3);
                  echo "<tr>";
                  echo "<td>" . $row2['Name'] . "</td>";
                  echo "<td>" . $row2['Price'] . "</td>";
-                 echo "<td><input type='radio' id = 'condiment name='condiment' value='" . $row2['Name'] . "'></td>";
+                 echo "<td><input type='radio' class = 'menu' id='condiment' name='condiment' value='" . $row2['Name'] . "'></td>";
                  echo "</tr>";
                }
                 ?>
@@ -106,7 +112,7 @@ $result3 = mysqli_query($conn,$sql3);
                  echo "<tr>";
                  echo "<td>" . $row3['Type'] . "</td>";
                  echo "<td>" . $row3['Price'] . "</td>";
-                 echo "<td><input type='radio' id = 'milk' name='milk' value='" . $row3['Type'] . "'></td>";
+                 echo "<td><input type='radio' class = 'menu' id='milk' name='milk' value='" . $row3['Type'] . "'></td>";
                  echo "</tr>";
                }
                 ?>
