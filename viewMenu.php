@@ -41,6 +41,9 @@ $result3 = mysqli_query($conn,$sql3);
            array[i].checked = false;
          }
        }
+       function errorMessage(){
+         alert("Please finish your order.")
+       }
      </script>
    </head>
    <body>
