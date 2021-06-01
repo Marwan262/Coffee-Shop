@@ -1,5 +1,8 @@
 <?php
 include 'php/classes.php';
+if (!isset($_SESSION['Cart'])) {
+  $_SESSION['Cart'] = "";
+}
 $conn = new mysqli("localhost", "root", "", "c2");
 $sql1 = "SELECT * FROM drink";
 $sql2 = "SELECT * FROM condiments";
@@ -13,6 +16,27 @@ $result3 = mysqli_query($conn,$sql3);
    <head>
      <meta charset="utf-8">
      <title>Menu</title>
+     <script type="text/javascript">
+       function addAnotherDrink(){
+         var condiment = document.getElementById('condiment').value;
+         var drink = document.getElementById('drink').value;
+         var milk = document.getElementById('milk').value;
+         var formdata = new formData();
+         formdata.append('q', 'add');
+         formdata.append('order', 'awdwad');
+         var xmlhttp=new XMLHttpRequest();
+         // xmlhttp.onreadystatechange=function() {
+         //   if (this.readyState==4 && this.status==200) {
+         //     clear();
+         //   }
+         // }
+         xmlhttp.open("POST","php/menu.php",true);
+         xmlhttp.send(formData);
+       }
+       function clear(){
+
+       }
+     </script>
    </head>
    <body>
      <h2>Menu</h2>
@@ -36,8 +60,7 @@ $result3 = mysqli_query($conn,$sql3);
                  echo "<td>" . $row1['drinkName'] . "</td>";
                  echo "<td>" . $row1['Price'] . "</td>";
                  echo "<td>" . $row1['Description'] . "</td>";
-                 echo "<td align='center'><input type='button' name='' value='Add to Cart'></td>";
-                 // echo "<input type='radio' name='' value='" . $row1['Name'] . "'>";
+                 echo "<td><input type='radio' id = 'drink name='drink' value='" . $row1['drinkName'] . "'></td>";
                  echo "</tr>";
                }
                 ?>
@@ -60,8 +83,7 @@ $result3 = mysqli_query($conn,$sql3);
                  echo "<tr>";
                  echo "<td>" . $row2['Name'] . "</td>";
                  echo "<td>" . $row2['Price'] . "</td>";
-                 echo "<td align='center'><input type='button' name='' value='Add to Cart'></td>";
-                 // echo "<input type='radio' name='condiment' value='" . $row2['Name'] . "'>";
+                 echo "<td><input type='radio' id = 'condiment name='condiment' value='" . $row2['Name'] . "'></td>";
                  echo "</tr>";
                }
                 ?>
@@ -84,56 +106,18 @@ $result3 = mysqli_query($conn,$sql3);
                  echo "<tr>";
                  echo "<td>" . $row3['Type'] . "</td>";
                  echo "<td>" . $row3['Price'] . "</td>";
-                 echo "<td align='center'><input type='button' name='' value='Add to Cart'></td>";
-                 // echo "<input type='radio' name='condiment' value='" . $row2['Name'] . "'>";
+                 echo "<td><input type='radio' id = 'milk' name='milk' value='" . $row3['Type'] . "'></td>";
                  echo "</tr>";
                }
                 ?>
              </tbody>
         </table>
      </div>
+       <input type="button" name="" value="Add Another Drink" onclick="addAnotherDrink()">
+       <input type="button" name="" value="View Cart">
    </body>
  </html>
-<!-- <!DOCTYPE html>
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <script type="text/javascript">
-      function showMenu(){
-        var formData = new FormData();
-        formData.append('q', 'view');
-        var xmlhttp=new XMLHttpRequest();
-        xmlhttp.onreadystatechange=function() {
-          if (this.readyState==4 && this.status==200) {
-            document.getElementById("rTable").innerHTML=this.responseText;
-          }
-        }
-        xmlhttp.open("POST","php/menu.php",true);
-        xmlhttp.send(formData);
-      }
-  </script>
-  </head>
-  <body onload="showMenu()">
-  <div class="container">
-  <h2>Menu</h2>
-  <h4>Beverages</h4>
-  </div>
-  <div class="container">
-    <table width="100%" border="1" style="border-collapse:collapse; margin-top:4px;">
-      <thead>
-        <tr>
-          <th><strong>Beverage</strong></th>
-          <th><strong>Price</strong></th>
-        </tr>
-      </thead>
-      <tbody id="rTable">
-      </tbody>
-    </table>
 
-
-    </div>
-  </body>
-</html>
 <?php
 ob_end_flush();
-?> -->
+?>
