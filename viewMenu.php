@@ -1,10 +1,12 @@
 <?php
 include 'php/classes.php';
-$conn = new mysqli("localhost", "root", "", "coffee_shop");
-$sql1 = "SELECT * FROM beverages";
+$conn = new mysqli("localhost", "root", "", "c2");
+$sql1 = "SELECT * FROM drink";
 $sql2 = "SELECT * FROM condiments";
+$sql3 = "SELECT * FROM milktype";
 $result1 = mysqli_query($conn,$sql1);
 $result2 = mysqli_query($conn,$sql2);
+$result3 = mysqli_query($conn,$sql3);
  ?>
  <!DOCTYPE html>
  <html lang="en" dir="ltr">
@@ -15,12 +17,14 @@ $result2 = mysqli_query($conn,$sql2);
    <body>
      <h2>Menu</h2>
      <div class="">
-        <h4>Beverages</h4>
+        <h4>Drinks</h4>
         <table width="30%" border="1" style="border-collapse:collapse; margin-top:4px;">
              <thead>
                <tr>
-                 <th><strong>Beverage</strong></th>
+                 <th><strong></strong></th>
+                 <th><strong>Drink</strong></th>
                  <th><strong>Price</strong></th>
+                 <th><strong>Description</strong></th>
                  <th><strong></strong></th>
                </tr>
              </thead>
@@ -28,10 +32,12 @@ $result2 = mysqli_query($conn,$sql2);
                <?php
                while ($row1 = mysqli_fetch_array($result1)) {
                  echo "<tr>";
-                 echo "<td>" . $row1['Name'] . "</td>";
+                 echo "<td><img src='pics/" . $row1['drinkName'] . ".jpg' alt='Italian Trulli' width = '75' height = '75'></td>";
+                 echo "<td>" . $row1['drinkName'] . "</td>";
                  echo "<td>" . $row1['Price'] . "</td>";
+                 echo "<td>" . $row1['Description'] . "</td>";
                  echo "<td align='center'><input type='button' name='' value='Add to Cart'></td>";
-                 echo "<input type='radio' name='' value='" . $row1['Name'] . "'>";
+                 // echo "<input type='radio' name='' value='" . $row1['Name'] . "'>";
                  echo "</tr>";
                }
                 ?>
@@ -43,7 +49,7 @@ $result2 = mysqli_query($conn,$sql2);
         <table width="30%" border="1" style="border-collapse:collapse; margin-top:4px;">
              <thead>
                <tr>
-                 <th><strong>Beverage</strong></th>
+                 <th><strong>Condiment</strong></th>
                  <th><strong>Price</strong></th>
                  <th><strong></strong></th>
                </tr>
@@ -55,7 +61,31 @@ $result2 = mysqli_query($conn,$sql2);
                  echo "<td>" . $row2['Name'] . "</td>";
                  echo "<td>" . $row2['Price'] . "</td>";
                  echo "<td align='center'><input type='button' name='' value='Add to Cart'></td>";
-                 echo "<input type='radio' name='condiment' value='" . $row2['Name'] . "'>";
+                 // echo "<input type='radio' name='condiment' value='" . $row2['Name'] . "'>";
+                 echo "</tr>";
+               }
+                ?>
+             </tbody>
+        </table>
+     </div>
+     <div class="">
+        <h4>Milk</h4>
+        <table width="30%" border="1" style="border-collapse:collapse; margin-top:4px;">
+             <thead>
+               <tr>
+                 <th><strong>Milk Type</strong></th>
+                 <th><strong>Price</strong></th>
+                 <th><strong></strong></th>
+               </tr>
+             </thead>
+             <tbody>
+               <?php
+               while ($row3 = mysqli_fetch_array($result3)) {
+                 echo "<tr>";
+                 echo "<td>" . $row3['Type'] . "</td>";
+                 echo "<td>" . $row3['Price'] . "</td>";
+                 echo "<td align='center'><input type='button' name='' value='Add to Cart'></td>";
+                 // echo "<input type='radio' name='condiment' value='" . $row2['Name'] . "'>";
                  echo "</tr>";
                }
                 ?>
