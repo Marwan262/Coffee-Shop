@@ -17,19 +17,28 @@ $result3 = mysqli_query($conn,$sql3);
      <meta charset="utf-8">
      <title>Menu</title>
      <script type="text/javascript">
-       function addAnotherDrink(){
+       function addAnotherDrink(id){
          var order = "";
-         var condiment = document.getElementById('condiment').value.toString();
-         var drink = document.getElementById('drink').value.toString();
+         var condiment = document.getElementById('condiment').value.toString() + ",";
+         var drink = document.getElementById('drink').value.toString() + ",";
          var milk = document.getElementById('milk').value.toString();
          order += drink += condiment += milk;
          var formData = new FormData();
-         formData.append('q', 'add');
+         if (id == 1) {
+           if (drink == "") {
+             errorMessage();
+             return;
+           }
+           formData.append('q', 'add');
+         }
          formData.append('order', order);
          var xmlhttp=new XMLHttpRequest();
          xmlhttp.onreadystatechange=function() {
            if (this.readyState==4 && this.status==200) {
              clear();
+             if (id == 2) {
+               window.location.href = "tempcart.php";
+             }
            }
          }
          xmlhttp.open("POST","php/menu.php",true);
@@ -122,8 +131,8 @@ $result3 = mysqli_query($conn,$sql3);
              </tbody>
         </table>
      </div>
-       <input type="button" name="" value="Add Another Drink" onclick="addAnotherDrink()">
-       <input type="button" name="" value="View Cart">
+       <input type="button" name="" value="Add Another Drink" onclick="addAnotherDrink(1)">
+       <input type="button" name="" value="Check out" onclick="addAnotherDrink(2)">
    </body>
  </html>
 
