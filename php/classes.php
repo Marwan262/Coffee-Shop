@@ -78,16 +78,7 @@ class admin extends User{
 
 class Cart
 {
-  function addToCart($order){
-    if (!isset($_SESSION['Cart'])) {
-      $_SESSION['cart'] = "";
-      $_SESSION['Cart'] .= $order;
-    }
-    else {
-      $_SESSION['Cart'] .= "/" .= $order;
-    }
-
-  }
+ 
 
 }
 

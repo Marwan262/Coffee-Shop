@@ -3,13 +3,15 @@ session_start();
 include "classes.php";
 $order = $_POST['order'];
 
+$cart = new Cart(); 
+
 function addToCart(){
-  if (!isset($_SESSION['Cart'])) {
-    $_SESSION['cart'] = "";
-    $_SESSION['Cart'] .= $order;
+  if (isset($_SESSION['Cart'])) {
+    $cart = $_SESSION['Cart'];
+    // $_SESSION['Cart'] .= $order;
   }
   else {
-    $_SESSION['Cart'] .= "/" .= $order;
+   $cart = new Cart(); 
   }
 }
 
