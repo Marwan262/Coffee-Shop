@@ -26,8 +26,8 @@ class Database_Handler{
   public function displayDrink()
   {
     $connection = $this->connection;
-    $sql = "SELECT * FROM drink"; 
-    $result = mysqli_query($connection, $sql); 
+    $sql = "SELECT * FROM drink";
+    $result = mysqli_query($connection, $sql);
     while($row = mysqli_fetch_array($result))
     {
       echo "<tr>";
@@ -44,8 +44,8 @@ class Database_Handler{
   public function displaySize()
   {
     $connection = $this->connection;
-    $sql = "SELECT * FROM size"; 
-    $result = mysqli_query($connection, $sql); 
+    $sql = "SELECT * FROM size";
+    $result = mysqli_query($connection, $sql);
     while($row = mysqli_fetch_array($result))
     {
       echo "<tr>";
@@ -59,8 +59,8 @@ class Database_Handler{
   public function displayMilkTypes()
   {
     $connection = $this->connection;
-    $sql = "SELECT * FROM milktype"; 
-    $result = mysqli_query($connection, $sql); 
+    $sql = "SELECT * FROM milktype";
+    $result = mysqli_query($connection, $sql);
     while($row = mysqli_fetch_array($result))
     {
       echo "<tr>";
@@ -74,8 +74,8 @@ class Database_Handler{
   public function displayCondiments()
   {
     $connection = $this->connection;
-    $sql = "SELECT * FROM condiments"; 
-    $result = mysqli_query($connection, $sql); 
+    $sql = "SELECT * FROM condiments";
+    $result = mysqli_query($connection, $sql);
     while($row = mysqli_fetch_array($result))
     {
       echo "<tr>";
@@ -95,20 +95,82 @@ abstract class User
 {
   public $conn;
   function create_connection(){
-      $this->conn = new mysqli("localhost", "root", "", "hotel");
+      $this->conn = new mysqli("localhost", "root", "", "coffee_shop");
   }
 
 }
 
 class client extends User{
-  function displayMenu(){
+  public $username;
+  public $password;
+
+  function login($user, $pass){
     $this->create_connection();
-    $sql1 = "SELECT * FROM beverages";
-    // $sql2 = "SELECT * FROM condiments";
-    // $sql3 = "SELECT * FROM drinks";
-    $result=mysqli_query($this->conn,$sql1);
-    return $result;
+    $result = mysqli_query($this->conn,"SELECT * FROM person WHERE Name='$user' AND Password='$pass'");
+    $num_rows = mysqli_num_rows($result);
+
+    if ($num_rows > 0) {
+      header('Location: viewMenu.php');
+    }
+    else {
+      echo "Incorrect Credentials.";
+    }
   }
+
+}
+
+
+class SignUpDB{   //DBconnection
+  public $host = 'localhost'; //host NAME.
+  public $database = 'coffee_shop'; //Database Name
+  public $dbusername = 'root'; //Database Username
+  public $dbpassword = ''; //Database Password
+  public $conn;
+
+  function __construct() {
+       
+      $this->conn = new mysqli($this->host,$this-> dbusername, $this->dbpassword,$this->database); 
+  
+      if (mysqli_connect_error()) {
+          die('Connect Error (' . mysqli_connect_errno() . ') '
+                  . mysqli_connect_error());
+      }
+      
+  } 
+  
+  
+
+  public function close(){
+      mysqli_close(); 
+  }
+     public function isUserExist($email,$usertype){  
+      
+      $sql= "SELECT * FROM person WHERE Email = '".$email."' and UserType='".$usertype."' ";
+      $result =  $this->conn->query($sql);
+      if ($result) {  //mysqli_query($this->conn, $sql)
+          if ($result->num_rows > 0) {
+            return true;
+          } else {
+            return false;
+          }
+        } else {
+          echo 'Error: '.mysqli_error();
+        }
+
+
+}
+  public function UserRegister($username,$email, $password){  
+      
+      $usertype= "1";
+      $sql= "INSERT INTO person(Name, Email,Password,UserType) 
+      values('".$username."','".$email."','".$password."','".$usertype."')";
+       if ( $this->conn->query($sql)) {
+          return true;
+    } else {
+          return false;
+    }
+  }
+
 
 }
 
@@ -150,13 +212,13 @@ class admin extends User{
 
 
 
-class Cart 
+class Cart
 {
 
 
     public function addToCart(int $drink, $milkType, $size, $condiments)
     {
-      $drinkPrice = "SELECT Price FROM drink WHERE id='$drink'"; 
+      $drinkPrice = "SELECT Price FROM drink WHERE id='$drink'";
 
       $addToCartSQL = "INSERT INTO drinkorder SET Drink='$drink', Size='$size',
                        Condiments='$condiments', MilkType='$milkType', TotalPrice='$total'";
@@ -173,3 +235,6 @@ class Cart
 
 
 ?>
+
+  
+

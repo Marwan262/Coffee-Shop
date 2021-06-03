@@ -1,5 +1,7 @@
 <?php
 include 'php/classes.php';
+include "NavBar.php";
+
 if (!isset($_SESSION['Cart'])) {
   $_SESSION['Cart'] = "";
 }
