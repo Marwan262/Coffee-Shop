@@ -1,22 +1,14 @@
 <?php
 session_start();
-include "classes.php";
+
 $order = $_POST['order'];
 
-function addToCart(){
-  if (!isset($_SESSION['Cart'])) {
-    $_SESSION['cart'] = "";
-    $_SESSION['Cart'] .= $order;
-  }
-  else {
-    $_SESSION['Cart'] .= "/" .= $order;
-  }
+if (!isset($_SESSION['cart'])) {
+  $_SESSION['cart'] = [];
+  array_push($_SESSION['cart'], $order);
+}
+else {
+  array_push($_SESSION['cart'], $order);
 }
 
-
-switch ($_POST['q']) {
-  case 'add':
-    addToCart();
-    break;
-}
 ?>
