@@ -20,8 +20,8 @@
           <table class="table">
           <thead>
             <tr>
-              <th>Item</th>
-              <th>Quantity</th>
+              <th>Item No.</th>
+              <th>Item Name</th>
               <th>Price</th>
             </tr>
           </thead>
