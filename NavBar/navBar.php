@@ -9,10 +9,8 @@
     <div class="topnav-right"> 
         <a href="/Coffee-Shop/login.php">Login</a> <!-- Remove after Login -->
         <a href="/Coffee-Shop/Registration/SignUp.php">Register</a> <!-- Remove after Login -->
-        <a href="">Modify Inventory</a> <!--After employee login--> 
-        <a href="">View Inventory</a> <!--After employee login--> 
-        <a href="">Modify Users</a> <!--After employee login--> 
-        <a href="">View Users</a> <!--After employee login--> 
+        <a href="/Coffee-Shop/inventory.php">View Inventory</a> <!--After employee login--> 
+        <a href="/Coffee-Shop/users.php">View Users</a> <!--After employee login--> 
         <a href=""><i class="fa fa-shopping-cart"></i> Cart</a> <!--After customer login--> 
         <a href="">Profile</a> <!-- After any user login--->
         <a href="/Coffee-Shop/php/logout.php">Logout</a> <!-- After any user login -->
