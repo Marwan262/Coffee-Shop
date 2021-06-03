@@ -76,7 +76,7 @@
 
                 <div class="col-md-6">
                     <h1 style="text-align:center;"> Sign Up </h1>
-                    <form method="post">
+                    <form method="post" action="../../login.php">
                         <div class="formList">
                                 <label> Username </label>
                                 <input type="text" name="username" class="form-control" required>
