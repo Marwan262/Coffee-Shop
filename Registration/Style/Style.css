@@ -1,0 +1,38 @@
+.container{
+	 display:flex;
+	 justify-content:center;
+	 align-items:center;
+	 height:100vh;
+  }
+
+
+  .col-md-6{
+	background-color:black; 
+	border-radius: 10px;
+	color:white;
+	
+  }
+ 
+form{
+    width:auto;
+	height: 500px;
+	/*padding-left: 100px; */
+}
+
+
+
+.btn-primary{
+	background-color: #edb77d !important;
+	color: white;
+}
+
+.btn-primary:hover{
+	background-color: 
+	#eb901c !important;
+}
+
+.form-control{
+	background-color: black;
+	
+}
+
