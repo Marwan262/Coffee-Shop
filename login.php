@@ -8,8 +8,9 @@
 	<body>
 		<?php
 			include "php/classes.php";
-			// If form submitted, insert values into the database.
+			session_start();
 			if (isset($_POST['submit'])){
+				$_SESSION['username'] = $_POST['username'];
 			  $x = new client();
 				$x->login($_POST['username'], $_POST['password']);
 			}
