@@ -1,6 +1,6 @@
 <?php
 session_start();
-include "classes.php";
+
 $order = $_POST['order'];
 
 $cart = new Cart(); 
@@ -14,11 +14,8 @@ function addToCart(){
    $cart = new Cart(); 
   }
 }
-
-
-switch ($_POST['q']) {
-  case 'add':
-    addToCart();
-    break;
+else {
+  array_push($_SESSION['cart'], $order);
 }
+
 ?>

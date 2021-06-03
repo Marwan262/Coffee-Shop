@@ -18,40 +18,66 @@ $result3 = mysqli_query($conn,$sql3);
      <title>Menu</title>
      <script type="text/javascript">
        function addAnotherDrink(id){
+         var checked = false;
          var order = "";
-         var condiment = document.getElementById('condiment').value.toString() + ",";
-         var drink = document.getElementById('drink').value.toString() + ",";
-         var milk = document.getElementById('milk').value.toString();
-         order += drink += condiment += milk;
-         var formData = new FormData();
-         if (id == 1) {
-           if (drink == "") {
-             errorMessage();
-             return;
+         var drink,milk,condiment = " ";
+         var array1 = document.getElementsByClassName("drink");
+         var array2 = document.getElementsByClassName("condiment");
+         var array3 = document.getElementsByClassName("milk");
+
+         for (var i = 0; i < array1.length; i++) {
+           if (array1[i].checked == true) {
+              drink = array1[i];
+              checked = true;
            }
-           formData.append('q', 'add');
          }
+         for (var i = 0; i < array2.length; i++) {
+           if (array2[i].checked == true) {
+              condiment = array2[i];
+           }
+         }
+         for (var i = 0; i < array3.length; i++) {
+           if (array3[i].checked == true) {
+              milk = array3[i];
+           }
+         }
+
+        if (!checked) {
+          errorMessage();
+          return;
+        }
+         order = drink.value + "," + condiment.value + "," + milk.value;
+         var formData = new FormData();
          formData.append('order', order);
+         // alert(order);
          var xmlhttp=new XMLHttpRequest();
          xmlhttp.onreadystatechange=function() {
            if (this.readyState==4 && this.status==200) {
              clear();
-             if (id == 2) {
-               window.location.href = "tempcart.php";
-             }
            }
          }
          xmlhttp.open("POST","php/menu.php",true);
          xmlhttp.send(formData);
        }
        function clear(){
-         var array = document.getElementsByClassName("menu");
-         for (var i = 0; i < array.length; i++) {
-           array[i].checked = false;
+         var array1 = document.getElementsByClassName("drink");
+         var array2 = document.getElementsByClassName("condiment");
+         var array3 = document.getElementsByClassName("milk");
+         for (var i = 0; i < array1.length; i++) {
+           array1[i].checked = false;
+         }
+         for (var j = 0; j < array2.length; j++) {
+           array2[j].checked = false;
+         }
+         for (var k = 0; k < array3.length; k++) {
+           array3[k].checked = false;
          }
        }
        function errorMessage(){
          alert("Please finish your order.")
+       }
+       function checkout(){
+         window.location.href = "tempcart.php";
        }
      </script>
      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
@@ -72,7 +98,6 @@ $result3 = mysqli_query($conn,$sql3);
                </tr>
              </thead>
              <tbody>
-
                <?php
                while ($row1 = mysqli_fetch_array($result1)) {
                  echo "<tr>";
@@ -80,7 +105,7 @@ $result3 = mysqli_query($conn,$sql3);
                  echo "<td>" . $row1['drinkName'] . "</td>";
                  echo "<td>" . $row1['Price'] . "EGP</td>";
                  echo "<td>" . $row1['Description'] . "</td>";
-                 echo "<td><input type='radio' class = 'menu' id='drink' name='drink' value='" . $row1['drinkName'] . "'></td>";
+                 echo "<td><input type='radio' class = 'drink' id='drink' name='drink' value='" . $row1['drinkName'] . "'></td>";
                  echo "</tr>";
                }
                 ?>
