@@ -1,19 +1,93 @@
 <?php
-abstract class Database_Handler{
-  public $conn;
-  function create_connection(){
-      $this->conn = new mysqli("localhost", "root", "", "coffee_shop");
+class Database_Handler{
+
+  private $host = 'localhost';
+  private $username = 'root';
+  private $password = '';
+  private $database = 'coffee_shop';
+
+  protected $connection;
+
+  public function __construct(){
+
+      if (!isset($this->connection)) {
+
+          $this->connection = new mysqli($this->host, $this->username, $this->password, $this->database);
+
+          if (!$this->connection) {
+              echo 'Cannot connect to database';
+              exit;
+          }
+      }
+
+      return $this->connection;
   }
-  function close_connection(){
-      $this->conn->close();
+
+  public function displayDrink()
+  {
+    $connection = $this->connection;
+    $sql = "SELECT * FROM drink"; 
+    $result = mysqli_query($connection, $sql); 
+    while($row = mysqli_fetch_array($result))
+    {
+      echo "<tr>";
+      echo "<td><img src='pics/" . $row['drinkName'] . ".jpg' alt='Italian Trulli' width = '75' height = '75'></td>";
+      echo "<td>" . $row['drinkName'] . "</td>";
+      echo "<td>" . $row['Price'] . "</td>";
+      echo "<td>" . $row['Description'] . "</td>";
+      echo "<td><input type='radio' class = 'drink' id='drink' name='drink' value='" . $row['drinkName'] . "'></td>";
+      echo "</tr>";
+
+    }
   }
- //  abstract function insert($fields);
- //  abstract function update($fields);
- // abstract function delete($fields);
- //  abstract function by_id($id);
- //  abstract function by_data($fields);
-  abstract function displayMenu();
+
+  public function displaySize()
+  {
+    $connection = $this->connection;
+    $sql = "SELECT * FROM size"; 
+    $result = mysqli_query($connection, $sql); 
+    while($row = mysqli_fetch_array($result))
+    {
+      echo "<tr>";
+      echo "<td>" . $row['Size'] . "</td>";
+      echo "<td>" . $row['Price'] . "</td>";
+      echo "<td><input type='radio' class = 'drink' id='drink' name='size' value='" . $row['Size'] . "'></td>";
+      echo "</tr>";
+
+    }
   }
+  public function displayMilkTypes()
+  {
+    $connection = $this->connection;
+    $sql = "SELECT * FROM milktype"; 
+    $result = mysqli_query($connection, $sql); 
+    while($row = mysqli_fetch_array($result))
+    {
+      echo "<tr>";
+      echo "<td>" . $row['Type'] . "</td>";
+      echo "<td>" . $row['Price'] . "</td>";
+      echo "<td><input type='radio' class = 'drink' id='drink' name='milk' value='" . $row['Type'] . "'></td>";
+      echo "</tr>";
+
+    }
+  }
+  public function displayCondiments()
+  {
+    $connection = $this->connection;
+    $sql = "SELECT * FROM condiments"; 
+    $result = mysqli_query($connection, $sql); 
+    while($row = mysqli_fetch_array($result))
+    {
+      echo "<tr>";
+      echo "<td>" . $row['Name'] . "</td>";
+      echo "<td>" . $row['Price'] . "</td>";
+      echo "<td><input type='checkbox' class = 'drink' id='drink' name='condiment' value='" . $row['Name'] . "'></td>";
+      echo "</tr>";
+
+    }
+  }
+}
+
 
 
 
@@ -76,11 +150,24 @@ class admin extends User{
 
 
 
-class Cart
+class Cart 
 {
- 
+
+
+    public function addToCart(int $drink, $milkType, $size, $condiments)
+    {
+      $drinkPrice = "SELECT Price FROM drink WHERE id='$drink'"; 
+
+      $addToCartSQL = "INSERT INTO drinkorder SET Drink='$drink', Size='$size',
+                       Condiments='$condiments', MilkType='$milkType', TotalPrice='$total'";
+    }
+
+
+
 
 }
+
+
 
 
 
