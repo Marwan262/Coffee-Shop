@@ -46,18 +46,18 @@ $result3 = mysqli_query($conn,$sql3);
           errorMessage();
           return;
         }
-         // order = drink.value + "," + condiment.value + "," + milk.value;
-         // var formData = new FormData();
-         // formData.append('order', order);
+         order = drink.value + "," + condiment.value + "," + milk.value;
+         var formData = new FormData();
+         formData.append('order', order);
          // alert(order);
-         // var xmlhttp=new XMLHttpRequest();
-         // xmlhttp.onreadystatechange=function() {
-         //   if (this.readyState==4 && this.status==200) {
-         //     clear();
-         //   }
-         // }
-         // xmlhttp.open("POST","php/menu.php",true);
-         // xmlhttp.send(formData);
+         var xmlhttp=new XMLHttpRequest();
+         xmlhttp.onreadystatechange=function() {
+           if (this.readyState==4 && this.status==200) {
+             clear();
+           }
+         }
+         xmlhttp.open("POST","php/menu.php",true);
+         xmlhttp.send(formData);
        }
        function clear(){
          var array1 = document.getElementsByClassName("drink");
