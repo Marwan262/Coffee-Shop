@@ -91,32 +91,40 @@ class Database_Handler{
 
 
 
-abstract class User
-{
+
+
+class User{
+  public $username;
+  public $password;
+
   public $conn;
   function create_connection(){
       $this->conn = new mysqli("localhost", "root", "", "coffee_shop");
   }
 
-}
-
-class client extends User{
-  public $username;
-  public $password;
-
-  function login($user, $pass){
+  public function login($user, $pass){
     $this->create_connection();
     $result = mysqli_query($this->conn,"SELECT * FROM person WHERE Name='$user' AND Password='$pass'");
     $num_rows = mysqli_num_rows($result);
 
     if ($num_rows > 0) {
-      header('Location: viewMenu.php');
+      header('Location: /Coffee-Shop/viewMenu.php');
     }
     else {
       echo "Incorrect Credentials.";
     }
   }
 
+  public function logout(){
+      @session_start();
+      session_destroy();
+      header('location:/Coffee-Shop/viewMenu.php');
+  }
+
+}
+
+class Employee extends User{
+  
 }
 
 
@@ -174,41 +182,6 @@ class SignUpDB{   //DBconnection
 
 }
 
-
-class admin extends User{
-
-      function login($username,$password){
-        $this->create_connection();
-        $sql="SELECT * from user where username='$username'and password='$password'";
-        $result=mysqli_query($this->conn,$sql);
-        return $result;
-      }
-
-
-  function display(){
-    $this->create_connection();
-    $sql = "SELECT * FROM user";
-    $result=mysqli_query($this->conn,$sql);
-    $this->close_connection();
-    return $result;
-  }
-
-  function delete($id){
-    $this->create_connection();
-    $sql = "DELETE FROM user WHERE ID = $id ";
-    $result = mysqli_query($this->conn,$sql);
-    $this->close_connection();
-  }
-
-  function update($fields){
-    $this->create_connection();
-    $sql = "UPDATE user SET first_name = " . "'$fields[first_name]'" . ", last_name = " . "'$fields[last_name]'" . ", password = " . "'$fields[password]'" . ", position = " . "'$fields[position]'" . ", username = " . "'$fields[username]'" . " WHERE ID = '$fields[id]'";
-    $result = mysqli_query($this->conn,$sql);
-    $this->close_connection();
-  }
-
-
-}
 
 
 
