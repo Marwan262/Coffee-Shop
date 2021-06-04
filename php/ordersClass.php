@@ -23,12 +23,16 @@ class orders extends db{
     $milkType=$row['MilkType'];
     $total=$row['TotalPrice'];
 
-    $sql ="SELECT drinkName FROM drink WHERE id='$drink' ";
-    $result = $this->connect()->query($sql);
-    while ($row2=$result->fetch()){
-      echo "<tbody><tr><td>".$row2['drinkName']."</td></tr></tbody>" ;
+    $sql2 ="SELECT drinkName FROM drink WHERE id='$drink' ";
+    $result2 = $this->connect()->query($sql2);
+    while ($row2=$result2->fetch()){
+      echo "<tbody><tr><td>".$row2['drinkName']."</td>" ;
     }
-
+    $sql3 ="SELECT Size FROM size WHERE id='$size' ";
+    $result3 = $this->connect()->query($sql3);
+    while ($row3=$result3->fetch()){
+      echo "<td>".$row3['Size']."</td></tr></tbody>" ;
+    }
 
   }
 echo "</table>";
