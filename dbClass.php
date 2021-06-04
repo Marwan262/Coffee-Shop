@@ -10,6 +10,7 @@ class db{
     $pdo = new PDO($conn,$this->user,$this->pass);
     $pdo ->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
     return $pdo;
+
   }
 }
  ?>
