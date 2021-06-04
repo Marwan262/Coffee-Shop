@@ -216,7 +216,7 @@ class Employee extends User{
       $result = mysqli_query($this->conn,$displayUsersSQL); 
       while ($row = mysqli_fetch_array($result)) {
          echo "<tr>";
-         echo "<td>" . $row['id'] . "</td>";
+         echo "<td>" . $row['ID'] . "</td>";
          echo "<td>" . $row['Name'] . "</td>";
          echo "<td>" . $row['Password'] . "</td>";
          echo "<td>" . $row['Email'] . "</td>";
@@ -231,6 +231,57 @@ class Employee extends User{
 
     public function addToInventory()
     {
+      $this->create_connection();
+
+        //Add New Drink
+        if(isset($_POST['addDrink']))
+        {
+            $name = $_POST['drinkName']; 
+            $price = $_POST['drinkPrice']; 
+            $description = $_POST['drinkDescription'];
+            $addNewDrinkSQL = "INSERT INTO size SET Size='$size', Price='$price' "; 
+            if ( $this->conn->query($addNewDrinkSQL)) {
+              return true;
+            } 
+            else {return false;}
+        }
+        // Add New Size
+        else if(isset($_POST['addSize']))
+        {
+            $size = $_POST['size']; 
+            $price = $_POST['sizePrice']; 
+            $addNewSizeSQL = "INSERT INTO size SET Size='$size', Price='$price' "; 
+            if ( $this->conn->query($addNewSizeSQL)) {
+              return true;
+            } 
+            else {return false;}
+        }
+
+        // Add New Milk Type
+        else if(isset($_POST['addType']))
+        {
+            $type = $_POST['type']; 
+            $price = $_POST['typePrice']; 
+            $addNewTypeSQL = "INSERT INTO milktype SET Type='$type', Price='$price' "; 
+            if ( $this->conn->query($addNewTypeSQL)) {
+              return true;
+            } 
+            else {return false;}
+        }
+
+         // Add New Condiment
+         else if(isset($_POST['addCond']))
+         {
+             $cond = $_POST['condName']; 
+             $price = $_POST['condPrice']; 
+             $addNewCondSQL = "INSERT INTO condiments SET Name='$type', Price='$price' "; 
+             if ( $this->conn->query($addNewCondSQL)) {
+               return true;
+             } 
+             else {return false;}
+         }
+        
+
 
     }
 
