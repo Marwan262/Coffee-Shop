@@ -1,5 +1,5 @@
 <?php
-include "dbclass.php";
+include_once "../php/dbClass.php";
 ob_start();
 include "../login.php";
 $data = ob_get_clean();
