@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 02, 2021 at 10:49 PM
+-- Generation Time: Jun 04, 2021 at 10:45 PM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.3
 
@@ -19,7 +19,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `coffee_shop`
+-- Database: `coffee shop`
 --
 
 -- --------------------------------------------------------
@@ -130,21 +130,10 @@ INSERT INTO `milktype` (`id`, `Type`, `Price`) VALUES
 
 CREATE TABLE `person` (
   `ID` int(11) NOT NULL,
-  `Name` varchar(300) NOT NULL,
+  `Name` int(11) NOT NULL,
   `Password` int(11) NOT NULL,
-  `UserType` int(11) NOT NULL,
-  `Email` varchar(320) NOT NULL
+  `UserType` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `person`
---
-
-INSERT INTO `person` (`ID`, `Name`, `Password`, `UserType`, `Email`) VALUES
-(1, 'kamal1544', 123456, 1, 'kamal23@yahoo.com'),
-(2, 'youssefGG', 123456, 1, 'youssefGamal@yahoo.com'),
-(3, 'MalakHesham56', 2211, 1, 'malak_Hesham00@outlook.com'),
-(4, 'nadasalah', 223311, 1, 'nadasalah123@hotmail.com');
 
 -- --------------------------------------------------------
 
@@ -282,7 +271,7 @@ ALTER TABLE `milktype`
 -- AUTO_INCREMENT for table `person`
 --
 ALTER TABLE `person`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `size`
