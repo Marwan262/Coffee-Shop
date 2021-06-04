@@ -6,11 +6,20 @@ class orders extends db{
     $sql="SELECT * FROM drinkorder";
     $result=$this->connect()->query($sql);
     while ($row=$result->fetch()) {
-      echo $row['Drink'];
+      $drink=$row['Drink'];
+      $size=$row['Size'];
+      $condiments=$row['Condiments'];
+      $milkType=$row['MilkType'];
+      $total=$row['TotalPrice'];
+
+      $sql ="SELECT drinkName FROM drink WHERE id='$drink' ";
+      $result = $this->connect()->query($sql);
+      echo $row['drinkName'];
+
+      $sql ="SELECT Size FROM size WHERE id='$size' ";
+      $result = $this->connect()->query($sql);
       echo $row['Size'];
-      echo $row['Condiments'];
-      echo $row['MilkType'];
-      echo $row['TotalPrice'];
+
     }
   }
 }
