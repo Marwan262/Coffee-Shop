@@ -61,8 +61,9 @@ body {font-family: Arial, Helvetica, sans-serif;}
                 <th>ID</th>
                 <th>Username</th>
                 <th>Password</th>
-                <th>UserType</th>
                 <th>Email</th>
+                <th>UserType</th>
+
                 <th>Action</th>
             </thead>
             <tbody>
