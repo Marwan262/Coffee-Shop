@@ -14,7 +14,7 @@ include "ordersClass.php";
 <body>
 
 <?php
-$obj = new ordersClass();
+$obj = new orders();
 echo $obj->getOrders();
  ?>
 
