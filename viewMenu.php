@@ -1,5 +1,10 @@
 <?php
 include 'php/classes.php';
+<<<<<<< HEAD
+=======
+include 'NavBar/navBar.php';
+
+>>>>>>> da1b3b616945dfbc89f5d08cd475013764371cde
 if (!isset($_SESSION['Cart'])) {
   $_SESSION['Cart'] = "";
 }

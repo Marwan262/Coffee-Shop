@@ -23,6 +23,8 @@ class Database_Handler{
       return $this->connection;
   }
 
+  
+
   public function displayDrink()
   {
     $connection = $this->connection;
@@ -167,31 +169,210 @@ class Database_Handler{
 }
 
 
-abstract class User
-{
+
+
+class User{
+  public $username;
+  public $password;
+
   public $conn;
   function create_connection(){
       $this->conn = new mysqli("localhost", "root", "", "coffee_shop");
   }
 
-}
-
-class client extends User{
-  public $username;
-  public $password;
-
-  function login($user, $pass){
+  public function login($user, $pass){
     $this->create_connection();
     $result = mysqli_query($this->conn,"SELECT * FROM person WHERE Name='$user' AND Password='$pass'");
     $num_rows = mysqli_num_rows($result);
 
     if ($num_rows > 0) {
-      header('Location: viewMenu.php');
+      header('Location: /Coffee-Shop/viewMenu.php');
     }
     else {
       echo "Incorrect Credentials.";
     }
   }
+
+  public function logout(){
+      @session_start();
+      session_destroy();
+      header('location:/Coffee-Shop/viewMenu.php');
+  }
+
+}
+
+class Employee extends User{
+
+  public $conn;
+  function create_connection(){
+      $this->conn = new mysqli("localhost", "root", "", "coffee_shop");
+  }
+    public function viewDrinks()
+    {
+      $this->create_connection();
+      $displayDrinksSQL = "SELECT * FROM drink"; 
+                       $result = mysqli_query($this->conn,$displayDrinksSQL); 
+                       while ($row = mysqli_fetch_array($result)) {
+                        echo "<tr>";
+                        echo "<td>".$row['id']."</td>";
+                        echo "<td><img src='pics/" . $row['drinkName'] . ".jpg' alt='Italian Trulli' width = '75' height = '75'></td>";
+                        echo "<td>" . $row['drinkName'] . "</td>";
+                        echo "<td>" . $row['Price'] . " EGP</td>";
+                        echo "<td>" . $row['Description'] . "</td>";
+                        echo "<td><a class='btn btn-warning' href='edit.php'>Edit</a> &nbsp;
+                        <a class='btn btn-danger' href='delete.php'>Delete</a></td>";
+                        echo "</tr>";
+                        
+                      }
+
+
+    }
+
+    public function viewSizes()
+    {
+      $this->create_connection();
+      $displaySizesSQL = "SELECT * FROM size"; 
+      $result = mysqli_query($this->conn,$displaySizesSQL); 
+      while ($row = mysqli_fetch_array($result)) {
+         echo "<tr>";
+         echo "<td>" . $row['id'] . "</td>";
+         echo "<td>" . $row['Size'] . "</td>";
+         echo "<td>" . $row['Price'] . " EGP</td>";
+         echo "<td><a class='btn btn-warning' href='edit.php'>Edit</a> &nbsp;
+         <a class='btn btn-danger' href='delete.php'>Delete</a></td>";
+         echo "</tr>";
+       
+     }
+
+    }
+
+    public function viewMilkTypes()
+    {
+      $this->create_connection();
+
+      $displayTypesSQL = "SELECT * FROM milktype"; 
+      $result = mysqli_query($this->conn,$displayTypesSQL); 
+      while ($row = mysqli_fetch_array($result)) {
+         echo "<tr>";
+         echo "<td>" . $row['id'] . "</td>";
+         echo "<td>" . $row['Type'] . "</td>";
+         echo "<td>" . $row['Price'] . " EGP</td>";
+         echo "<td><a class='btn btn-warning' href='edit.php'>Edit</a> &nbsp;
+         <a class='btn btn-danger' href='delete.php'>Delete</a></td>";
+         echo "</tr>";
+       
+     }
+
+
+    }
+    public function viewCondiments()
+    {
+      $this->create_connection();
+
+      $displayCondSQL = "SELECT * FROM condiments"; 
+      $result = mysqli_query($this->conn,$displayCondSQL); 
+      while ($row = mysqli_fetch_array($result)) {
+         echo "<tr>";
+         echo "<td>" . $row['id'] . "</td>";
+         echo "<td>" . $row['Name'] . "</td>";
+         echo "<td>" . $row['Price'] . " EGP</td>";
+         echo "<td><a class='btn btn-warning' href='edit.php'>Edit</a> &nbsp;
+         <a class='btn btn-danger' href='delete.php'>Delete</a></td>";
+         echo "</tr>";
+       
+     }
+
+
+    }
+
+    public function viewUsers()
+    {
+      $this->create_connection();
+      $displayUsersSQL = "SELECT * FROM person"; 
+      $result = mysqli_query($this->conn,$displayUsersSQL); 
+      while ($row = mysqli_fetch_array($result)) {
+         echo "<tr>";
+         echo "<td>" . $row['ID'] . "</td>";
+         echo "<td>" . $row['Name'] . "</td>";
+         echo "<td>" . $row['Password'] . "</td>";
+         echo "<td>" . $row['Email'] . "</td>";
+         echo "<td>" . $row['UserType'] . "</td>";
+         if($row['UserType']==1){echo "<td>Customer</td>";}
+         else echo "<td>Employee</td>";
+         echo "<td><a class='btn btn-warning' href='edit.php'>Edit</a> &nbsp;
+         <a class='btn btn-danger' href='delete.php'>Delete</a></td>";
+         echo "</tr>";
+    }
+  }
+
+    public function addToInventory()
+    {
+      $this->create_connection();
+
+        //Add New Drink
+        if(isset($_POST['addDrink']))
+        {
+            $name = $_POST['drinkName']; 
+            $price = $_POST['drinkPrice']; 
+            $description = $_POST['drinkDescription'];
+            $addNewDrinkSQL = "INSERT INTO size SET Size='$size', Price='$price' "; 
+            if ( $this->conn->query($addNewDrinkSQL)) {
+              return true;
+            } 
+            else {return false;}
+        }
+        // Add New Size
+        else if(isset($_POST['addSize']))
+        {
+            $size = $_POST['size']; 
+            $price = $_POST['sizePrice']; 
+            $addNewSizeSQL = "INSERT INTO size SET Size='$size', Price='$price' "; 
+            if ( $this->conn->query($addNewSizeSQL)) {
+              return true;
+            } 
+            else {return false;}
+        }
+
+        // Add New Milk Type
+        else if(isset($_POST['addType']))
+        {
+            $type = $_POST['type']; 
+            $price = $_POST['typePrice']; 
+            $addNewTypeSQL = "INSERT INTO milktype SET Type='$type', Price='$price' "; 
+            if ( $this->conn->query($addNewTypeSQL)) {
+              return true;
+            } 
+            else {return false;}
+        }
+
+         // Add New Condiment
+         else if(isset($_POST['addCond']))
+         {
+             $cond = $_POST['condName']; 
+             $price = $_POST['condPrice']; 
+             $addNewCondSQL = "INSERT INTO condiments SET Name='$type', Price='$price' "; 
+             if ( $this->conn->query($addNewCondSQL)) {
+               return true;
+             } 
+             else {return false;}
+         }
+        
+
+
+    }
+
+    public function editInventory()
+    {
+
+    }
+
+    public function deleteFromInventory()
+    {
+
+    }
+
+    
+
 
 }
 
@@ -250,41 +431,6 @@ class SignUpDB{   //DBconnection
 
 }
 
-
-class admin extends User{
-
-      function login($username,$password){
-        $this->create_connection();
-        $sql="SELECT * from user where username='$username'and password='$password'";
-        $result=mysqli_query($this->conn,$sql);
-        return $result;
-      }
-
-
-  function display(){
-    $this->create_connection();
-    $sql = "SELECT * FROM user";
-    $result=mysqli_query($this->conn,$sql);
-    $this->close_connection();
-    return $result;
-  }
-
-  function delete($id){
-    $this->create_connection();
-    $sql = "DELETE FROM user WHERE ID = $id ";
-    $result = mysqli_query($this->conn,$sql);
-    $this->close_connection();
-  }
-
-  function update($fields){
-    $this->create_connection();
-    $sql = "UPDATE user SET first_name = " . "'$fields[first_name]'" . ", last_name = " . "'$fields[last_name]'" . ", password = " . "'$fields[password]'" . ", position = " . "'$fields[position]'" . ", username = " . "'$fields[username]'" . " WHERE ID = '$fields[id]'";
-    $result = mysqli_query($this->conn,$sql);
-    $this->close_connection();
-  }
-
-
-}
 
 
 
